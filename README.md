@@ -14,3 +14,5 @@ top_genres <- top100 %>%
 top_genres_scatter <- ggplot(top_genres, aes(x=top.genre, y=count)) +
   geom_point(fill="slateblue", alpha =0.1) +
   ggtitle("Top Genres")
+
+// This scatterplot focuses on the top genres of the top 100 songs from the data set.
