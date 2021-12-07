@@ -2,6 +2,8 @@
 
 ### Motivation: The question(s) that helped me start out this analysis was, "What did the highest rated year look like in terms of top energy, popularity, and the different attributes that come into play under these categories?". The choice in this dataset was driven by my curiosity in comparing the statistics and popularity in different years. The outcome of this analysis can tell you a lot about a the society and culture as a collective throughout the years.
 
+![Most_Live](file:///C:/Users/rheat/OneDrive/Documents/DATA%20115/Personal%20Project/Most_Live.jpeg)
+
 library(dplyr)
 library(ggplot2)
 
