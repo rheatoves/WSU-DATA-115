@@ -1,6 +1,6 @@
 # DATA-115, Rhea Toves
 
-### Motivation: The question(s) that helped me start out this analysis was, "What did the highest rated year look like in terms of top energy, popularity, and the different attributes that come into play under these categories?". The choice in this dataset was driven by my curiosity in comparing the statistics and popularity in different years. The outcome of this analysis can tell you a lot about a the society and culture as a collective throughout the years.
+### Motivation: The question(s) that helped me start out this analysis was, "What did the highest rated year look like in terms of top energy, popularity, and the different attributes that come into play under these categories?". The choice in this dataset was driven by my curiosity in comparing the statistics and popularity of music in different years. The outcome of this analysis can tell you a lot about a the society and culture as a collective throughout the years.
 
 library(dplyr)
 library(ggplot2)
@@ -21,6 +21,8 @@ most_live <- top100 %>%
   group_by(year) %>%
   summarise(total_liveness = sum(liveness)) %>%
   arrange(total_liveness)
+  
+### Data Process: I started 
 
 ## Graphing
 
@@ -42,3 +44,10 @@ livenessgraph <- ggplot(most_live, aes(x= year, y= total_liveness)) +
   ylab("Liveliness Ratings") +
   ggtitle("Most Live by Year")
   
+  ## Boxplot
+  
+  popularboxplot <- ggplot(most_popular, aes(x= year, y= total_pop)) +
+  geom_boxplot(fill="slateblue", alpha=0.1) +
+  xlab("Year") +
+  ylab("Popular Ratings") +
+  ggtitle("Most Popular")
