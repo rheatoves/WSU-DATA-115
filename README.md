@@ -1,8 +1,6 @@
-# DATA-115
+# DATA-115, Rhea Toves
 
-# The question(s) that helped me start out this analysis was, "What did the highest rated year look like in terms of top energy, popularity, and the different
-# attributes that come into play under these categories?". The choice in this dataset was driven by my curiosity in comparing the statistics and popularity in different
-# years. The outcome of this analysis can tell you a lot about a the society and culture as a collective throughout the years.
+### Motivation: The question(s) that helped me start out this analysis was, "What did the highest rated year look like in terms of top energy, popularity, and the different attributes that come into play under these categories?". The choice in this dataset was driven by my curiosity in comparing the statistics and popularity in different years. The outcome of this analysis can tell you a lot about a the society and culture as a collective throughout the years.
 
 library(dplyr)
 library(ggplot2)
@@ -24,7 +22,7 @@ most_live <- top100 %>%
   summarise(total_liveness = sum(liveness)) %>%
   arrange(total_liveness)
 
-# graphing
+## Graphing
 
 popgraph <- ggplot(most_popular, aes(x= year, y= total_pop)) +
   geom_line() +
