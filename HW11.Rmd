@@ -1,0 +1,176 @@
+---
+title: "HW11"
+author: "Rhea Toves"
+date: "11/17/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+ 
+Problem 1 is associated with your personal dataset project. Submit your work for all problems in a single .pdf compiled with knitr. The Homework Data folder has a starting .Rmd template with spaces for you to fill in your answers to the questions. 
+
+#### Problem 1 - This question is related to your personal data set project. The goal for the end of this week is to put together an initial visualization of your data and to perform one piece of analysis on your data.  
+
+##### (A) Use your dataset (possibly extended from what you originally submitted week 9) to create a visualization that summarizes an important property of the data. You should follow the principles of good visualization design that we discussed in week 4 and make sure to include a title, axis labels, and any other necessary components. 
+
+```{r, echo=FALSE, warning=FALSE}
+
+top100 <- read.csv("Spotify100.csv")
+
+head(top100)
+
+library(ggplot2)
+library(dplyr)
+
+top_genres <- top100 %>%
+  group_by(top.genre) %>%
+  summarise(count = n())
+
+top_genres_scatter <- ggplot(top_genres, aes(x=top.genre, y=count)) +
+  geom_point(fill="slateblue", alpha =0.1) +
+  ggtitle("Top Genres")
+
+```
+
+##### (B) Upload your figure to your github repository for the project and incorporate it into the readme file, along with a description (caption) of the plot that describes its contents. 
+
+##### (C) Choose one of the analytical techniques that we have discussed in class so far (either from the EDA section or the (un)supervised learning techniques) and apply it to your data. Explain in a brief paragraph why you chose this technique and what you learned about your data by performing this analysis (you don't have to upload this to github). This can be anything from a simple EDA technique like identifying outliers, making a box plot of a column, evaluating the summary statistics (Tukey's 5 numbers), to one of the regression models from supervised learning, or one of the clustering methods from unsupervised learning. This is not an exhaustive list of possibilities and as with the previous components doesn't need to be long or drawn out.
+
+```{r, echo=FALSE, warning=FALSE}
+
+top100 <- read.csv("Spotify100.csv")
+
+head(top100)
+
+library(ggplot2)
+library(dplyr)
+
+top_years <- top100 %>%
+  group_by(year) %>%
+  summarise(count = n())
+
+top_years_scatter <- ggplot(top_years, aes(x=year, y=count)) +
+  geom_point(fill="slateblue", alpha =0.1) +
+  ggtitle("Top 100 Throughout the Years")
+
+top_years_scatter
+
+```
+
+For this question, I wanted to discover more information about the years the top 100 songs were created in. The EDA technique I focused on was identifying outliers. The scatterplot does a great job in pointing out the outliers, you can see that songs from the late 90's and early 2000's are outliers compared to the rest of the data. From the years 2015-2019, the top 100 songs fall more into this category of years. This was an interesting discovery.
+
+#### Problem 2 - In your own words, please write brief answers to the following: 
+
+##### (A) What is the curse of dimensionality?
+
+- When dimensionality of the features space increases and the number of configurations grow exponentially.
+
+##### (B) What is the difference between MDS and PCA?
+
+- MDS is the process in which we convert distances to low-dimensional embedding. PCA is the process in which we transform our data to represent the largest amount of variance with the fewest amount of data sets.
+
+##### (C) Give an example of a dataset for which dimension reduction would be a useful first step. 
+
+- A dataset dealing with every name in the whole world would need to have dimension reduction.
+
+##### (D) What is a dendrogram and what type of clustering method is it used to represent?
+
+- A dendrogram is a graph that shows the clusters of data and the type of clustering method used is hierarchical clustering.
+
+##### (E) What is the difference between supervised and unsupervised learning? 
+
+- Supervised learning is the process in which a data scientist would separate data into two types of problems: classification and regression. Unsupervised learning is the process in which a data scientist would use this during the process of clustering, dimensionality, and association.
+
+#### Problem 3 - This problem checks your understanding of PCA and K means clustering. 
+
+##### (A)  Load the iris data as a dataframe. This is a classic dataset (originally published in 1936) that is frequently used as an initial set of test data. It consists of four numerical columns reporting the length and width of the sepal and petals of 150 iris plants and a final column reporting the specific subspecies. The version in the week 11 data folder also has an additional column with numerical column representing the subspecies. 
+
+```{r, echo=FALSE, warning=FALSE}
+
+iris_data <- read.csv("iris_data.csv")
+head(iris_data)
+
+```
+
+##### (B) Make a scatterplot of petal width vs. petal length colored by the subspecies.
+
+```{r, echo=FALSE, warning=FALSE}
+
+widthvslength <- ggplot(iris_data, aes(x=petal_length, y=petal_width)) +
+  geom_point(fill="slateblue", alpha =0.1) +
+  ggtitle("Petal Width vs Petal Length")
+
+widthvslength
+
+```
+
+##### (C) Use R to perform PCA on the data with the four numerical columns as inputs and make a scatter plot of the top two principal components colored by subspecies.
+
+```{r, echo=FALSE, warning=FALSE}
+
+numerical <- iris_data[, 1:4]
+
+irisPCA <- prcomp(numerical, center=TRUE, scale=TRUE)
+summary(irisPCA)
+
+```
+
+##### (D) What proportion of the variance is explained by these two components?
+
+- Across the two columns were explaining the 95% of the variance is across all the six columns from the original input.
+
+##### (E) What are the loadings for each of the original numerical columns?
+
+```{r, echo=FALSE, warning=FALSE}
+
+names(irisPCA)
+
+irisPCA$x[1,]
+
+```
+
+##### (F) Apply K means clustering to the four numeric columns with three clusters. 
+
+```{r, echo=FALSE, warning=FALSE}
+
+cluster1 <- kmeans(iris_data[,1:4],3)
+head(cluster1)
+
+```
+
+##### (G) Apply K means clustering to the two principal components with three clusters. 
+
+```{r, echo=FALSE, warning=FALSE}
+
+cluster2 <- kmeans(iris_data[,1:2],3)
+head(cluster2)
+
+```
+
+##### (H) Which of the two K means clusterings is more accurate at predicting the subspecies correctly?
+
+- The first k means clustering is more accurate at predicting the subspecies correctly.
+
+#### Problem 4 - Use the following exploratory data analysis projects about candy preferences: https://fivethirtyeight.com/videos/the-ultimate-halloween-candy-power-ranking/ to provide brief responses to the following: 
+ 
+##### (A) What research questions are the articles trying to answer? Where does your favorite candy rank in their list?
+
+- The authors stated they were curious as to what Halloween candy people preferred and performed research based on this question. My favorite candy, Milk Duds, placed 32/86.
+
+##### (B) Can you tell where the underlying data came from? 
+
+- The underlying data came from a survey with 8,371 different IP addresses who voted on 269k randomly generated match-ups.
+
+##### (C) What are some other ways you could use to determine which candy  is best?
+
+- You could have people insert (type) their favorite candy so they are not limited on the options given to them in the survey.
+
+##### (D) What type of regression is used in the candy power ranking article? How does the interpretation of the coefficients match up with what we discussed in class?
+
+- The specific regression was not mentioned in the article. But the interpretation of the coefficients match up with what we discussed in class.
+
+##### (E) What do you think about the visualizations and examples in these pieces?
+
+- The visualizations were very helpful in putting these statistics in perspective.
